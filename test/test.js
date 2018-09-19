@@ -24,7 +24,7 @@ function toString(input) {
 
 test("JSZipUtils.getBinaryContent, text, 200 OK", function(){
     stop();
-    JSZipUtils.getBinaryContent("ref/amount.txt", function(err, data) {
+    JSZipUtils.getBinaryContent("ref/amount.txt", null, function(err, data) {
         equal(err, null, "no error");
         equal(toString(data), "\xe2\x82\xac\x31\x35\x0a", "The content has been fetched");
         start();
@@ -33,7 +33,7 @@ test("JSZipUtils.getBinaryContent, text, 200 OK", function(){
 
 test("JSZipUtils.getBinaryContent, image, 200 OK", function(){
     stop();
-    JSZipUtils.getBinaryContent("ref/smile.gif", function(err, data) {
+    JSZipUtils.getBinaryContent("ref/smile.gif", null, function(err, data) {
         equal(err, null, "no error");
         equal(toString(data).indexOf("\x47\x49\x46\x38\x37\x61"), 0, "The content has been fetched");
         start();
@@ -42,7 +42,7 @@ test("JSZipUtils.getBinaryContent, image, 200 OK", function(){
 
 test("JSZipUtils.getBinaryContent, 404 NOT FOUND", function(){
     stop();
-    JSZipUtils.getBinaryContent("ref/nothing", function(err, data) {
+    JSZipUtils.getBinaryContent("ref/nothing", null, function(err, data) {
         equal(data, null, "no error");
         ok(err instanceof Error, "The error is an Error");
         start();

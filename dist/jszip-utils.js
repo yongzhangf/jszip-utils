@@ -49,7 +49,7 @@ var createXHR = window.ActiveXObject ?
 
 
 
-JSZipUtils.getBinaryContent = function(path, callback) {
+JSZipUtils.getBinaryContent = function(path, progressCallback, callback) {
     /*
      * Here is the tricky part : getting the data.
      * In firefox/chrome/opera/... setting the mimeType to 'text/plain; charset=x-user-defined'
@@ -79,6 +79,12 @@ JSZipUtils.getBinaryContent = function(path, callback) {
         if(xhr.overrideMimeType) {
             xhr.overrideMimeType("text/plain; charset=x-user-defined");
         }
+
+        xhr.onprogress = function (event) {
+            if (event.lengthComputable && progressCallback) {
+                progressCallback(event.total, event.loaded);
+            }
+        };
 
         xhr.onreadystatechange = function(evt) {
             var file, err;
